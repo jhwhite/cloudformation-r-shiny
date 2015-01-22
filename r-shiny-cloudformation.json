@@ -1,0 +1,66 @@
+{
+    "Parameters" : {
+		"ShinyKey": {
+	    	"Description": "Key pair for instance.",
+	    	"Type": "AWS::EC2::KeyPair::KeyName"
+	    }
+	},
+    "Resources": {
+		"Ec2Instance" : {
+			"Metadata": {
+				"AWS::CloudFormation::Init": {
+					"config": {
+						"packages": {
+							"apt": {
+								"r-base-dev": [],
+								"libcurl4-openssl-dev": [],
+								"git": []
+							}
+						}
+					}
+				}
+			},
+            "Type" : "AWS::EC2::Instance",
+    	    "Properties": {
+	        	"ImageId": "ami-9eaa1cf6",
+	        	"InstanceType": "t2.micro",
+	        	"KeyName": {"Ref": "ShinyKey"},
+				"SecurityGroups": [{"Ref": "InstanceSecurityGroup"}],
+				"Tags": [{
+		    		"Key": "Name",
+		    		"Value": "R-Shiny-Server"
+				}],
+    			"UserData": {
+        			"Fn::Base64": {
+            			"Fn::Join": [
+                			"",
+                			[
+                    			"#!/bin/bash\n",
+                    			"/opt/aws/bin/cfn-init --region ",
+                    		{
+                        		"Ref": "AWS::Region"
+                    		},
+                    		" -s ",
+                    		{
+                        		"Ref": "AWS::StackName"
+                    		},
+                    		" -r Ec2Instance\n"
+                			]
+            			]
+        			}
+    			}
+	    	}
+		},
+		"InstanceSecurityGroup" : {
+	    	"Type" : "AWS::EC2::SecurityGroup",
+	    	"Properties": {
+				"GroupDescription" : "Enable SSH access via port 22, and ports 3838 and 80 for Shiny",
+				"SecurityGroupIngress" : [
+		    		{ "IpProtocol" : "tcp", "FromPort" : "22", "ToPort" : "22", "CidrIp" : "0.0.0.0/0" },
+		    		{ "IpProtocol" : "tcp", "FromPort" : "80", "ToPort" : "80", "CidrIp" : "0.0.0.0/0" },
+		    		{ "IpProtocol" : "tcp", "FromPort" : "3838", "ToPort" : "3838", "CidrIp" : "0.0.0.0/0" }
+				]
+            }
+		}
+    }
+}
