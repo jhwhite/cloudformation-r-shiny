@@ -30,25 +30,25 @@
 		    		"Key": "Name",
 		    		"Value": "R-Shiny-Server"
 				}],
-    			"UserData": {
-        			"Fn::Base64": {
-            			"Fn::Join": [
-                			"",
-                			[
-                    			"#!/bin/bash\n",
-                    			"/opt/aws/bin/cfn-init --region ",
-                    		{
-                        		"Ref": "AWS::Region"
-                    		},
-                    		" -s ",
-                    		{
-                        		"Ref": "AWS::StackName"
-                    		},
-                    		" -r Ec2Instance\n"
-                			]
-            			]
-        			}
-    			}
+		        "UserData": {
+			        "Fn::Base64": {
+			            "Fn::Join": [
+			                "",
+			                [
+			                    "#!/bin/bash\n",
+			                    "/usr/local/bin/cfn-init --region ",
+			                    {
+			                        "Ref": "AWS::Region"
+			                    },
+			                    " -s ",
+			                    {
+			                        "Ref": "AWS::StackName"
+			                    },
+			                    " -r Ec2Instance\n"
+			                ]
+			            ]
+			        }
+			    }
 	    	}
 		},
 		"InstanceSecurityGroup" : {
