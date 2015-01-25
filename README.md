@@ -14,7 +14,7 @@ Go to http://aws.amazon.com and register for an account. If you already have an 
 ###Create KeyPair
 From your AWS console click the cube in the top left go to EC2 under the compute heading.
 
-Then in the right navigation click Key Pairs.
+Then in the left navigation click Key Pairs.
 
 Create a new Key Pair by clicking the Blue `Create Key Pair` button at the top.
 
