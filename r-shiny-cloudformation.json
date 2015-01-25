@@ -36,6 +36,15 @@
 			                "",
 			                [
 			                    "#!/bin/bash\n",
+			                    "sudo add-apt-repository http://cran.cnr.Berkeley.edu/\n",
+			                    "sudo apt-get -y update\n",
+			                    "sudo apt-get -y install r-base\n",
+			                   	"sudo apt-get -y install git\n",
+			                    "sudo apt-get -y install libcurl4-openssl-dev\n",
+			                    "sudo apt-get -y install libssl0.9.8\n",
+			                    "wget http://download3.rstudio.org/ubuntu-12.04/x86_64/shiny-server-1.0.0.42-amd64.deb\n",
+			                    "sudo dpkg -i /shiny-server-1.0.0.42-amd64.deb\n",
+			                    
 			                    "/usr/local/bin/cfn-init --region ",
 			                    {
 			                        "Ref": "AWS::Region"
